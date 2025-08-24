@@ -1,0 +1,10 @@
+Concept :
+	On incarne Santa Claus, qui après avoir déposé les cadeaux sous le sapin,
+	doit récupérer ses cookies et regagner la cheminée.
+	Cependant, il sera traqué par des enfants qui ne doivent pas l'attrapé.
+	
+Todo (Coding) :
+	- Déplacement du personnages (grid-base)
+	- deposer un cadeau pour faire diversion
+	- Récupération du cookies / passage dans la cheminée
+	- spawn des enfants en deux temps
