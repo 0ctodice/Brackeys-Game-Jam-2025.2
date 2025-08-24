@@ -7,6 +7,7 @@ var can_drop_gift : bool = true
 var has_cookie : bool = false
 
 func _physics_process(delta:float) -> void:
+	print(can_drop_gift)
 	if !sprite_tween or !sprite_tween.is_running() :
 		if Input.is_action_pressed("ui_up") and !$RayUp.is_colliding() :
 			_move(Vector2(0,-1))
@@ -35,5 +36,5 @@ func drop_gift() -> void:
 
 func cookie_setter(state: bool) -> void: has_cookie = state
 func cookie_getter() -> bool: return has_cookie
-func _on_gift_collider_body_entered(body) -> void: can_drop_gift = false
-func _on_gift_collider_body_exited(body) -> void: can_drop_gift = true
+func _on_gift_collider_area_entered(area) -> void: can_drop_gift = false
+func _on_gift_collider_area_exited(area) -> void: can_drop_gift = true

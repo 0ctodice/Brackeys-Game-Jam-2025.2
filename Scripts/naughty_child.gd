@@ -1,32 +1,87 @@
 extends RigidBody2D
 
+enum {SEARCHING, CHASING, ROAMING, OPENING_GIFT, FINISHED_OPENING_GIFT}
+
 const TILE_SIZE : Vector2 = Vector2(16,16)
 var sprite_tween : Tween
+var state = SEARCHING
 var can_move : bool = true
 var rng = RandomNumberGenerator.new()
 var possible_move = Array()
+var santa_last_position = null
+var santa_detected = false
+var is_it_gift = false
+
 func _physics_process(delta:float) -> void:
+	if !santa_detected and $SantaCollider.is_colliding() :
+		santa_detected = true
+		santa_last_position = $SantaCollider.get_collider().global_position
+		state = CHASING
+		is_it_gift = $SantaCollider.get_collision_mask_value(3)
+		
 	if (!sprite_tween or !sprite_tween.is_running()) and can_move :
+		match (state) :
+			SEARCHING :
+				$Timer.start(rng.randf_range(0.185, 3.0))
+				var target = _get_random_direction()
+				_look_towards_position(target)
+				_move(target)
+			CHASING :
+				$Timer.start(.5)
+				var target = _get_santa_direction()
+				_look_towards_position(target)
+				_move(target)
+			ROAMING :
+				$Timer.start(.75)
+				if possible_move.size() != 0 :
+					_move(Vector2.ZERO)
+					_look_towards_position(possible_move.pop_at(rng.randi_range(0, possible_move.size() - 1)))
+				else :
+					state = SEARCHING
+			OPENING_GIFT :
+				$Timer.start(3)
+				_look_towards_position(Vector2.ZERO)
+				_move(Vector2.ZERO)
+				state = ROAMING
+				
+func _look_towards_position(dir: Vector2) -> void :
+	$SantaCollider.target_position = dir * 80
+func _get_santa_direction() -> Vector2 :
+	santa_detected = false
+	var dir = Vector2.ZERO
+	if global_position.distance_to(santa_last_position) != 0 :
+		var brut_direction = global_position.direction_to(santa_last_position)
+		if brut_direction.y < 0 :
+			dir = Vector2(0,-1)
+		elif brut_direction.y > 0 :
+			dir = Vector2(0,1)
+		elif brut_direction.x < 0 :
+			dir = Vector2(-1,0)
+		elif brut_direction.x > 0 :
+			dir = Vector2(1,0)
+	else :
+		state = OPENING_GIFT if is_it_gift else ROAMING
 		possible_move.clear()
-		if !$RayUp.is_colliding() :
-			possible_move.append(Vector2(0,-1))
-		if !$RayDown.is_colliding() :
-			possible_move.append(Vector2(0,1))
-		if !$RayLeft.is_colliding() :
-			possible_move.append(Vector2(-1,0))
-		if !$RayRight.is_colliding() :
-			possible_move.append(Vector2(1,0))
-			
-		_move(possible_move[rng.randi_range(0, possible_move.size() - 1)])
+		possible_move.append_array([Vector2.UP, Vector2.RIGHT, Vector2.DOWN, Vector2.LEFT])
 	
+	return dir
+func _get_random_direction() -> Vector2 :
+	possible_move.clear()
+	if !$RayUp.is_colliding() :
+		possible_move.append(Vector2(0,-1))
+	if !$RayDown.is_colliding() :
+		possible_move.append(Vector2(0,1))
+	if !$RayLeft.is_colliding() :
+		possible_move.append(Vector2(-1,0))
+	if !$RayRight.is_colliding() :
+		possible_move.append(Vector2(1,0))
+	return possible_move[rng.randi_range(0, possible_move.size() - 1)]
 func _move(dir: Vector2) -> void:
 	can_move = false
-	$Timer.start(rng.randf_range(0.185, 3.0))
 	global_position += dir * TILE_SIZE
 	$Sprite2D.global_position -= dir * TILE_SIZE
 	if sprite_tween : sprite_tween.kill()
 	sprite_tween = create_tween()
 	sprite_tween.set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
 	sprite_tween.tween_property($Sprite2D, "global_position", global_position, 0.185).set_trans(Tween.TRANS_SINE)
-		
 func _on_timer_timeout(): can_move = true

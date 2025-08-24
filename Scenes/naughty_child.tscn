@@ -5,7 +5,7 @@
 [sub_resource type="CanvasTexture" id="CanvasTexture_lrpdm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lrpdm"]
-size = Vector2(16, 16)
+size = Vector2(14, 14)
 
 [node name="NaughtyChild" type="RigidBody2D"]
 modulate = Color(0.968587, 5.67943e-06, 7.70092e-07, 1)
@@ -22,7 +22,9 @@ texture = SubResource("CanvasTexture_lrpdm")
 shape = SubResource("RectangleShape2D_lrpdm")
 
 [node name="SantaCollider" type="RayCast2D" parent="."]
-target_position = Vector2(0, 80)
+target_position = Vector2(0, -80)
+collision_mask = 5
+collide_with_areas = true
 
 [node name="RayUp" type="RayCast2D" parent="."]
 target_position = Vector2(0, -16)

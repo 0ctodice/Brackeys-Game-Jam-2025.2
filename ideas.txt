@@ -2,12 +2,20 @@ Concept :
 	On incarne Santa Claus, qui après avoir déposé les cadeaux sous le sapin,
 	doit récupérer ses cookies et regagner la cheminée.
 	Cependant, il sera traqué par des enfants qui ne doivent pas l'attrapé.
-	
 
 Todo (Coding) :
 	Déplacement du personnages (grid-base) : DONE
 	deposer un cadeau pour faire diversion : DONE
 	Récupération du cookies : DONE
 	Déplacement des enfants : DONE (à améliorer)
-	Target des enfants sur santa en cas de contact visuel (path tracing)
-	Diversion par le cadeau
+	Target des enfants sur santa en cas de contact visuel : DONE
+		modification possible :
+			clean le code : DONE
+			quand l'enfant est sur la position de santa, il regarde autour, avant de reprendre sa route : DONE
+	Diversion par le cadeau :
+		- S'il voit le cadeau, fonce dessus (comme si c'était santa) : DONE
+		- Reste sur le cadeaux XX temps (SantaCollider à 0) : DONE
+
+Problème : 
+	double collision pour l'enfant entre santa et le cadeau (get_collider retourne le premier body détecté)
+	Pheropte : j'ai l'impression qu'il détecte bien le premier, mais que le souci c'est que dès qu'il est sur le cadeau il détecte le suivant et y va direct

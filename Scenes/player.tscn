@@ -47,5 +47,5 @@ collision_mask = 4
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GiftCollider"]
 shape = SubResource("RectangleShape2D_6t5aa")
 
-[connection signal="body_entered" from="GiftCollider" to="." method="_on_gift_collider_body_entered"]
-[connection signal="body_exited" from="GiftCollider" to="." method="_on_gift_collider_body_exited"]
+[connection signal="area_entered" from="GiftCollider" to="." method="_on_gift_collider_area_entered"]
+[connection signal="area_exited" from="GiftCollider" to="." method="_on_gift_collider_area_exited"]
