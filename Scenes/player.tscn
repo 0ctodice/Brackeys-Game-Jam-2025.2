@@ -1,12 +1,16 @@
-[gd_scene load_steps=4 format=3 uid="uid://ccpyl1fknrevd"]
+[gd_scene load_steps=5 format=3 uid="uid://ccpyl1fknrevd"]
 
 [ext_resource type="Script" uid="uid://dr36aqn8pac4s" path="res://Scripts/player.gd" id="1_cvnsp"]
 [ext_resource type="Texture2D" uid="uid://c1b068ddj557b" path="res://icon.svg" id="2_6t5aa"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cvnsp"]
-size = Vector2(16, 16)
+size = Vector2(12, 12)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6t5aa"]
+size = Vector2(12, 12)
 
 [node name="Player" type="CharacterBody2D"]
+collision_mask = 0
 motion_mode = 1
 script = ExtResource("1_cvnsp")
 
@@ -18,17 +22,30 @@ texture = ExtResource("2_6t5aa")
 shape = SubResource("RectangleShape2D_cvnsp")
 
 [node name="RayUp" type="RayCast2D" parent="."]
-position = Vector2(0, -8)
-target_position = Vector2(0, -8)
+target_position = Vector2(0, -16)
+collision_mask = 2
+collide_with_areas = true
 
 [node name="RayDown" type="RayCast2D" parent="."]
-position = Vector2(0, 8)
-target_position = Vector2(0, 8)
+target_position = Vector2(0, 16)
+collision_mask = 2
+collide_with_areas = true
 
 [node name="RayLeft" type="RayCast2D" parent="."]
-position = Vector2(-8, 0)
-target_position = Vector2(-8, 0)
+target_position = Vector2(-16, 0)
+collision_mask = 2
+collide_with_areas = true
 
 [node name="RayRight" type="RayCast2D" parent="."]
-position = Vector2(8, 0)
-target_position = Vector2(8, 0)
+target_position = Vector2(16, 0)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="GiftCollider" type="Area2D" parent="."]
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GiftCollider"]
+shape = SubResource("RectangleShape2D_6t5aa")
+
+[connection signal="body_entered" from="GiftCollider" to="." method="_on_gift_collider_body_entered"]
+[connection signal="body_exited" from="GiftCollider" to="." method="_on_gift_collider_body_exited"]
