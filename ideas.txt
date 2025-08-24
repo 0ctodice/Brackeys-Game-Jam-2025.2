@@ -6,6 +6,8 @@ Concept :
 
 Todo (Coding) :
 	Déplacement du personnages (grid-base) : DONE
-	deposer un cadeau pour faire diversion
-	Récupération du cookies / passage dans la cheminée
-	spawn des enfants en deux temps
+	deposer un cadeau pour faire diversion : DONE
+	Récupération du cookies : DONE
+	Déplacement des enfants : DONE (à améliorer)
+	Target des enfants sur santa en cas de contact visuel (path tracing)
+	Diversion par le cadeau

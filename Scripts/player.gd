@@ -4,6 +4,7 @@ const TILE_SIZE : Vector2 = Vector2(16,16)
 var sprite_tween : Tween
 var gift_scene = load("res://Scenes/gift.tscn")
 var can_drop_gift : bool = true
+var has_cookie : bool = false
 
 func _physics_process(delta:float) -> void:
 	if !sprite_tween or !sprite_tween.is_running() :
@@ -32,5 +33,7 @@ func drop_gift() -> void:
 	gift.global_position = global_position
 	get_parent().add_child(gift)
 
-func _on_gift_collider_body_entered(body): can_drop_gift = false
-func _on_gift_collider_body_exited(body): can_drop_gift = true
+func cookie_setter(state: bool) -> void: has_cookie = state
+func cookie_getter() -> bool: return has_cookie
+func _on_gift_collider_body_entered(body) -> void: can_drop_gift = false
+func _on_gift_collider_body_exited(body) -> void: can_drop_gift = true

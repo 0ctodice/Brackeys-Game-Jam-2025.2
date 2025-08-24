@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://csstsn2q7kyyc"]
+
+[ext_resource type="Script" uid="uid://dhs626lj2pjxl" path="res://Scripts/cookie.gd" id="1_ku7mm"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_hop5i"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_px6u8"]
+radius = 8.0
+
+[node name="Cookie" type="Area2D"]
+collision_layer = 8
+script = ExtResource("1_ku7mm")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(0.729404, 0.310075, 0.208846, 1)
+scale = Vector2(16, 16)
+texture = SubResource("CanvasTexture_hop5i")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_px6u8")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

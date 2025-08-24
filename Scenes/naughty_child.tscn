@@ -1,0 +1,49 @@
+[gd_scene load_steps=4 format=3 uid="uid://meyovnb0ln3s"]
+
+[ext_resource type="Script" uid="uid://w8yackm6cn5g" path="res://Scripts/naughty_child.gd" id="1_r11f0"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_lrpdm"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lrpdm"]
+size = Vector2(16, 16)
+
+[node name="NaughtyChild" type="RigidBody2D"]
+modulate = Color(0.968587, 5.67943e-06, 7.70092e-07, 1)
+collision_layer = 16
+collision_mask = 2
+gravity_scale = 0.0
+script = ExtResource("1_r11f0")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(16, 16)
+texture = SubResource("CanvasTexture_lrpdm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_lrpdm")
+
+[node name="SantaCollider" type="RayCast2D" parent="."]
+target_position = Vector2(0, 80)
+
+[node name="RayUp" type="RayCast2D" parent="."]
+target_position = Vector2(0, -16)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="RayDown" type="RayCast2D" parent="."]
+target_position = Vector2(0, 16)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="RayLeft" type="RayCast2D" parent="."]
+target_position = Vector2(-16, 0)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="RayRight" type="RayCast2D" parent="."]
+target_position = Vector2(16, 0)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="Timer" type="Timer" parent="."]
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
