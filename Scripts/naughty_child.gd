@@ -1,6 +1,6 @@
 extends RigidBody2D
 
-enum {SEARCHING, CHASING, ROAMING, OPENING_GIFT, FINISHED_OPENING_GIFT}
+enum {SEARCHING, CHASING, ROAMING, OPENING_GIFT}
 
 const TILE_SIZE : Vector2 = Vector2(16,16)
 var sprite_tween : Tween
@@ -13,12 +13,6 @@ var santa_detected = false
 var is_it_gift = false
 
 func _physics_process(delta:float) -> void:
-	if !santa_detected and $SantaCollider.is_colliding() :
-		santa_detected = true
-		santa_last_position = $SantaCollider.get_collider().global_position
-		state = CHASING
-		is_it_gift = $SantaCollider.get_collision_mask_value(3)
-		
 	if (!sprite_tween or !sprite_tween.is_running()) and can_move :
 		match (state) :
 			SEARCHING :
@@ -43,7 +37,13 @@ func _physics_process(delta:float) -> void:
 				_look_towards_position(Vector2.ZERO)
 				_move(Vector2.ZERO)
 				state = ROAMING
-				
+
+	if !santa_detected and $SantaCollider.is_colliding() and state != OPENING_GIFT:
+		santa_detected = true
+		santa_last_position = $SantaCollider.get_collider().global_position
+		state = CHASING
+		is_it_gift = $SantaCollider.get_collider().get_parent().name != "Player"
+		
 func _look_towards_position(dir: Vector2) -> void :
 	$SantaCollider.target_position = dir * 80
 func _get_santa_direction() -> Vector2 :
