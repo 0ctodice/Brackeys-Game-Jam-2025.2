@@ -1,6 +1,6 @@
 extends RigidBody2D
 
-enum {SEARCHING, CHASING, ROAMING, OPENING_GIFT}
+enum {SEARCHING, CHASING, ROAMING, OPENING_GIFT, FINISHED_OPENING_GIFT}
 
 const TILE_SIZE : Vector2 = Vector2(16,16)
 var sprite_tween : Tween
@@ -11,29 +11,29 @@ var possible_move = Array()
 var santa_last_position = null
 var santa_detected = false
 var is_it_gift = false
-
-@export var textures : Array[Texture2D]
+var kid_type : String
 
 func _ready():
-	var texture = textures[rng.randi_range(0,1)]
-	$Sprite/Body.texture = texture
-	$Sprite/Outfit.texture = texture
-	$Sprite/Outfit.modulate = Color(rng.randf_range(0,1),rng.randf_range(0,1),rng.randf_range(0,1))
-
+	kid_type = "A" if rng.randi_range(0,1) else "B"
+	_load_anim("Walk")
+	$Sprite/AnimatedOutfit.modulate = Color(rng.randf_range(0,1),rng.randf_range(0,1),rng.randf_range(0,1))
 func _physics_process(delta:float) -> void:
 	if (!sprite_tween or !sprite_tween.is_running()) and can_move :
 		match (state) :
 			SEARCHING :
+				_load_anim("Walk")
 				$Timer.start(rng.randf_range(0.185, 3.0))
 				var target = _get_random_direction()
 				_look_towards_position(target)
 				_move(target)
 			CHASING :
+				_load_anim("Chase")
 				$Timer.start(.5)
 				var target = _get_santa_direction()
 				_look_towards_position(target)
 				_move(target)
 			ROAMING :
+				_load_anim("Walk")
 				$Timer.start(.75)
 				if possible_move.size() != 0 :
 					_move(Vector2.ZERO)
@@ -41,19 +41,25 @@ func _physics_process(delta:float) -> void:
 				else :
 					state = SEARCHING
 			OPENING_GIFT :
+				_load_anim("Opening_Gift")
 				$Timer.start(3)
 				_look_towards_position(Vector2.ZERO)
 				_move(Vector2.ZERO)
+				state = FINISHED_OPENING_GIFT
+			FINISHED_OPENING_GIFT :
 				state = ROAMING
-
 	if !santa_detected and $SantaCollider.is_colliding() and state != OPENING_GIFT:
 		santa_detected = true
 		santa_last_position = $SantaCollider.get_collider().global_position
 		state = CHASING
-		is_it_gift = $SantaCollider.get_collider().get_parent().name != "Player"
-		
+		is_it_gift = $SantaCollider.get_collider().name.begins_with("Gift") and $SantaCollider.get_collider().name != "GiftCollider"
+func _load_anim(anim:String) -> void :
+	$Sprite/AnimatedBody.play(anim + "_" + kid_type if anim != "Opening_Gift" else "Opening_Gift")
+	$Sprite/AnimatedOutfit.play(anim + "_" + kid_type if anim != "Opening_Gift" else "Opening_Gift")
 func _look_towards_position(dir: Vector2) -> void :
 	$SantaCollider.target_position = dir * 80
+	$Sprite/AnimatedOutfit.flip_h = $Sprite/AnimatedOutfit.flip_h if dir.x == 0 else dir.x < 0
+	$Sprite/AnimatedBody.flip_h = $Sprite/AnimatedBody.flip_h if dir.x == 0 else dir.x < 0
 func _get_santa_direction() -> Vector2 :
 	santa_detected = false
 	var dir = Vector2.ZERO
