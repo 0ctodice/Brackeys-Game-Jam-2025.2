@@ -25,4 +25,7 @@ shape = SubResource("RectangleShape2D_a02cp")
 position = Vector2(168, 40)
 
 [node name="NaughtyChild" parent="." instance=ExtResource("3_5a7ea")]
-position = Vector2(120, 136)
+position = Vector2(88, 136)
+
+[node name="NaughtyChild2" parent="." instance=ExtResource("3_5a7ea")]
+position = Vector2(24, 72)

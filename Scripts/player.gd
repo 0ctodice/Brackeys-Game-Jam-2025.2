@@ -26,7 +26,7 @@ func _move(dir: Vector2) -> void:
 	if sprite_tween : sprite_tween.kill()
 	sprite_tween = create_tween()
 	sprite_tween.set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
-	sprite_tween.tween_property($Sprite2D, "global_position", global_position, 0.185).set_trans(Tween.TRANS_SINE)
+	sprite_tween.tween_property($Sprite2D, "global_position", $Sprite2D.global_position + dir * TILE_SIZE, 0.185).set_trans(Tween.TRANS_SINE)
 
 func drop_gift() -> void:
 	var gift = gift_scene.instantiate()

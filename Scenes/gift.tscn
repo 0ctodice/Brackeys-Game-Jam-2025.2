@@ -1,8 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://jgrw5i85247b"]
 
 [ext_resource type="Script" uid="uid://icqhn8gjs5xx" path="res://Scripts/gift.gd" id="1_1b1os"]
-
-[sub_resource type="CanvasTexture" id="CanvasTexture_wnhmm"]
+[ext_resource type="Texture2D" uid="uid://q1gbyv5jhfhm" path="res://Assets/giftbox.png" id="2_1b1os"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hn5kd"]
 size = Vector2(14, 14)
@@ -13,9 +12,15 @@ collision_layer = 4
 collision_mask = 16
 script = ExtResource("1_1b1os")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(16, 16)
-texture = SubResource("CanvasTexture_wnhmm")
+[node name="ColorSprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_1b1os")
+region_enabled = true
+region_rect = Rect2(16, 0, 16, 16)
+
+[node name="Outline" type="Sprite2D" parent="."]
+texture = ExtResource("2_1b1os")
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 16)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_hn5kd")

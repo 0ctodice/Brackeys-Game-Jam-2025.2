@@ -12,6 +12,14 @@ var santa_last_position = null
 var santa_detected = false
 var is_it_gift = false
 
+@export var textures : Array[Texture2D]
+
+func _ready():
+	var texture = textures[rng.randi_range(0,1)]
+	$Sprite/Body.texture = texture
+	$Sprite/Outfit.texture = texture
+	$Sprite/Outfit.modulate = Color(rng.randf_range(0,1),rng.randf_range(0,1),rng.randf_range(0,1))
+
 func _physics_process(delta:float) -> void:
 	if (!sprite_tween or !sprite_tween.is_running()) and can_move :
 		match (state) :
@@ -79,9 +87,9 @@ func _get_random_direction() -> Vector2 :
 func _move(dir: Vector2) -> void:
 	can_move = false
 	global_position += dir * TILE_SIZE
-	$Sprite2D.global_position -= dir * TILE_SIZE
+	$Sprite.global_position -= dir * TILE_SIZE
 	if sprite_tween : sprite_tween.kill()
 	sprite_tween = create_tween()
 	sprite_tween.set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
-	sprite_tween.tween_property($Sprite2D, "global_position", global_position, 0.185).set_trans(Tween.TRANS_SINE)
+	sprite_tween.tween_property($Sprite, "global_position", global_position, 0.185).set_trans(Tween.TRANS_SINE)
 func _on_timer_timeout(): can_move = true
