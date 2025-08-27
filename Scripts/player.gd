@@ -22,7 +22,7 @@ func _physics_process(delta:float) -> void:
 			_move(Vector2(1,0))
 			$AnimatedSprite2D.flip_h = false
 		if Input.is_action_just_pressed("ui_accept") and can_drop_gift :
-			drop_gift()	
+			drop_gift()
 func _move(dir: Vector2) -> void:
 	global_position += dir * TILE_SIZE
 	$AnimatedSprite2D.global_position -= dir * TILE_SIZE
@@ -35,7 +35,7 @@ func drop_gift() -> void:
 	$AnimatedSprite2D.play("Drop_Gift")
 	var gift = gift_scene.instantiate()
 	gift.global_position = global_position
-	get_parent().add_child(gift)
+	get_parent().get_node("GiftsNode").add_child(gift)
 func cookie_setter(state: bool) -> void: has_cookie = state
 func cookie_getter() -> bool: return has_cookie
 func _on_gift_collider_area_entered(area) -> void: can_drop_gift = false
@@ -44,3 +44,7 @@ func _on_animated_sprite_2d_animation_finished():
 	if $AnimatedSprite2D.animation == "Drop_Gift" :
 		can_walk = true
 		$AnimatedSprite2D.play("Walk")
+func tp(pos: Vector2) -> void :
+	if sprite_tween : sprite_tween.kill()
+	global_position = pos
+	$AnimatedSprite2D.global_position = pos + (Vector2.UP * 8)

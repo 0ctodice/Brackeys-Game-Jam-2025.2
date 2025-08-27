@@ -18,3 +18,13 @@ Todo (Coding) :
 
 Problème : 
 	double collision pour l'enfant entre santa et le gift : DONE
+	On doit pouvoir regardé dans une direction, même si on peut pas y a aller
+	
+Idée :
+	Les cadeau que drop santa, le bloque
+	
+Tuto :
+	- Récupérer un cookie
+	- Le cookie peut être dans une autre pièce
+	- Les enfants t'attaquent
+	- Faire diversion avec le cadeau

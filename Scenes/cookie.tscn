@@ -1,22 +1,64 @@
-[gd_scene load_steps=4 format=3 uid="uid://csstsn2q7kyyc"]
+[gd_scene load_steps=7 format=3 uid="uid://csstsn2q7kyyc"]
 
 [ext_resource type="Script" uid="uid://dhs626lj2pjxl" path="res://Scripts/cookie.gd" id="1_ku7mm"]
-
-[sub_resource type="CanvasTexture" id="CanvasTexture_hop5i"]
+[ext_resource type="Texture2D" uid="uid://4veddm5xoq2q" path="res://Assets/Tilesheet/assets.png" id="2_px6u8"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_px6u8"]
 radius = 8.0
+
+[sub_resource type="Animation" id="Animation_px6u8"]
+resource_name = "Floating"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.01, 1, 2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -3), Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_us53w"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_gdleh"]
+_data = {
+&"Floating": SubResource("Animation_px6u8"),
+&"RESET": SubResource("Animation_us53w")
+}
 
 [node name="Cookie" type="Area2D"]
 collision_layer = 8
 script = ExtResource("1_ku7mm")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-modulate = Color(0.729404, 0.310075, 0.208846, 1)
-scale = Vector2(16, 16)
-texture = SubResource("CanvasTexture_hop5i")
+texture = ExtResource("2_px6u8")
+region_enabled = true
+region_rect = Rect2(16, 96, 16, 16)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_px6u8")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_gdleh")
+}
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
