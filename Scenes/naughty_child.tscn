@@ -1,6 +1,8 @@
-[gd_scene load_steps=24 format=3 uid="uid://meyovnb0ln3s"]
+[gd_scene load_steps=26 format=3 uid="uid://meyovnb0ln3s"]
 
 [ext_resource type="Script" uid="uid://w8yackm6cn5g" path="res://Scripts/naughty_child.gd" id="1_r11f0"]
+[ext_resource type="Texture2D" uid="uid://dfvwvgnyij7kd" path="res://Assets/circular_light_2D_2.png" id="2_1ao5r"]
+[ext_resource type="Texture2D" uid="uid://c31dly7qy8t2s" path="res://Assets/directionnal_light_2D.png" id="2_d1n4q"]
 [ext_resource type="Texture2D" uid="uid://b7ufciwspapm1" path="res://Assets/kids.png" id="4_d1n4q"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_d1n4q"]
@@ -196,13 +198,25 @@ script = ExtResource("1_r11f0")
 
 [node name="Sprite" type="Node2D" parent="."]
 
+[node name="TorchAnchor" type="Node2D" parent="Sprite"]
+
+[node name="PointLight2D2" type="PointLight2D" parent="Sprite/TorchAnchor"]
+position = Vector2(0, -40)
+energy = 0.5
+texture = ExtResource("2_d1n4q")
+
+[node name="PointLight2D" type="PointLight2D" parent="Sprite"]
+energy = 0.5
+texture = ExtResource("2_1ao5r")
+texture_scale = 0.5
+
 [node name="AnimatedOutfit" type="AnimatedSprite2D" parent="Sprite"]
 sprite_frames = SubResource("SpriteFrames_n0qs5")
 animation = &"Walk_A"
 
 [node name="AnimatedBody" type="AnimatedSprite2D" parent="Sprite"]
 sprite_frames = SubResource("SpriteFrames_tdnhv")
-animation = &"Walk_A"
+animation = &"Opening_Gift"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_lrpdm")
@@ -214,22 +228,22 @@ collide_with_areas = true
 
 [node name="RayUp" type="RayCast2D" parent="."]
 target_position = Vector2(0, -16)
-collision_mask = 2
+collision_mask = 34
 collide_with_areas = true
 
 [node name="RayDown" type="RayCast2D" parent="."]
 target_position = Vector2(0, 16)
-collision_mask = 2
+collision_mask = 34
 collide_with_areas = true
 
 [node name="RayLeft" type="RayCast2D" parent="."]
 target_position = Vector2(-16, 0)
-collision_mask = 2
+collision_mask = 34
 collide_with_areas = true
 
 [node name="RayRight" type="RayCast2D" parent="."]
 target_position = Vector2(16, 0)
-collision_mask = 2
+collision_mask = 34
 collide_with_areas = true
 
 [node name="Timer" type="Timer" parent="."]

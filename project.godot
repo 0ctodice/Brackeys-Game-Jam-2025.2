@@ -34,6 +34,7 @@ project/assembly_name="Brackeys_2025_2"
 2d_physics/layer_3="Gift"
 2d_physics/layer_4="Cookie"
 2d_physics/layer_5="NaughtyChild"
+2d_physics/layer_6="TP"
 
 [rendering]
 

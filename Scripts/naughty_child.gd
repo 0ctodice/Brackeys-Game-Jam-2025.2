@@ -14,7 +14,7 @@ var is_it_gift = false
 var kid_type : String
 
 func _ready():
-	kid_type = "A" if rng.randi_range(0,1) else "B"
+	kid_type = "A" if rng.randi_range(0,1) == 0 else "B"
 	_load_anim("Walk")
 	$Sprite/AnimatedOutfit.modulate = Color(rng.randf_range(0,1),rng.randf_range(0,1),rng.randf_range(0,1))
 func _physics_process(delta:float) -> void:
@@ -26,6 +26,7 @@ func _physics_process(delta:float) -> void:
 				var target = _get_random_direction()
 				_look_towards_position(target)
 				_move(target)
+				state = ROAMING
 			CHASING :
 				_load_anim("Chase")
 				$Timer.start(.5)
@@ -34,7 +35,7 @@ func _physics_process(delta:float) -> void:
 				_move(target)
 			ROAMING :
 				_load_anim("Walk")
-				$Timer.start(.75)
+				$Timer.start(.25)
 				if possible_move.size() != 0 :
 					_move(Vector2.ZERO)
 					_look_towards_position(possible_move.pop_at(rng.randi_range(0, possible_move.size() - 1)))
@@ -60,6 +61,7 @@ func _look_towards_position(dir: Vector2) -> void :
 	$SantaCollider.target_position = dir * 80
 	$Sprite/AnimatedOutfit.flip_h = $Sprite/AnimatedOutfit.flip_h if dir.x == 0 else dir.x < 0
 	$Sprite/AnimatedBody.flip_h = $Sprite/AnimatedBody.flip_h if dir.x == 0 else dir.x < 0
+	$Sprite/TorchAnchor.rotation = (PI/2) + dir.angle()
 func _get_santa_direction() -> Vector2 :
 	santa_detected = false
 	var dir = Vector2.ZERO
