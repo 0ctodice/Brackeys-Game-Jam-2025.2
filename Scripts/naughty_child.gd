@@ -5,7 +5,7 @@ enum {SEARCHING, CHASING, ROAMING, OPENING_GIFT, FINISHED_OPENING_GIFT}
 const TILE_SIZE : Vector2 = Vector2(16,16)
 var sprite_tween : Tween
 var state = SEARCHING
-var can_move : bool = true
+var can_move : bool = false
 var rng = RandomNumberGenerator.new()
 var possible_move = Array()
 var santa_last_position = null
@@ -28,20 +28,26 @@ func _physics_process(delta:float) -> void:
 				_move(target)
 				state = ROAMING
 			CHASING :
+				$Sprite/CircularLight.color = Color.RED
+				$Sprite/TorchAnchor/TorchLight.color = Color.RED
 				_load_anim("Chase")
 				$Timer.start(.5)
 				var target = _get_santa_direction()
 				_look_towards_position(target)
 				_move(target)
 			ROAMING :
+				$Sprite/CircularLight.color = Color.WHITE
+				$Sprite/TorchAnchor/TorchLight.color = Color.WHITE
 				_load_anim("Walk")
 				$Timer.start(.25)
+				state = SEARCHING
 				if possible_move.size() != 0 :
 					_move(Vector2.ZERO)
 					_look_towards_position(possible_move.pop_at(rng.randi_range(0, possible_move.size() - 1)))
 				else :
 					state = SEARCHING
 			OPENING_GIFT :
+				$Sprite/TorchAnchor/TorchLight.color = Color("ffffff",0.0)
 				_load_anim("Opening_Gift")
 				$Timer.start(3)
 				_look_towards_position(Vector2.ZERO)
@@ -84,13 +90,14 @@ func _get_santa_direction() -> Vector2 :
 func _get_random_direction() -> Vector2 :
 	possible_move.clear()
 	if !$RayUp.is_colliding() :
-		possible_move.append(Vector2(0,-1))
+		possible_move.append(Vector2.UP)
 	if !$RayDown.is_colliding() :
-		possible_move.append(Vector2(0,1))
+		possible_move.append(Vector2.DOWN)
 	if !$RayLeft.is_colliding() :
-		possible_move.append(Vector2(-1,0))
+		possible_move.append(Vector2.LEFT)
 	if !$RayRight.is_colliding() :
-		possible_move.append(Vector2(1,0))
+		possible_move.append(Vector2.RIGHT)
+	print(possible_move)
 	return possible_move[rng.randi_range(0, possible_move.size() - 1)]
 func _move(dir: Vector2) -> void:
 	can_move = false
@@ -101,3 +108,5 @@ func _move(dir: Vector2) -> void:
 	sprite_tween.set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
 	sprite_tween.tween_property($Sprite, "global_position", global_position, 0.185).set_trans(Tween.TRANS_SINE)
 func _on_timer_timeout(): can_move = true
+func _on_visible_on_screen_notifier_2d_screen_entered(): can_move = true
+func _on_visible_on_screen_notifier_2d_screen_exited(): can_move = false

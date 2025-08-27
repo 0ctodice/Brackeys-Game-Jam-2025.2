@@ -200,12 +200,12 @@ script = ExtResource("1_r11f0")
 
 [node name="TorchAnchor" type="Node2D" parent="Sprite"]
 
-[node name="PointLight2D2" type="PointLight2D" parent="Sprite/TorchAnchor"]
+[node name="TorchLight" type="PointLight2D" parent="Sprite/TorchAnchor"]
 position = Vector2(0, -40)
 energy = 0.5
 texture = ExtResource("2_d1n4q")
 
-[node name="PointLight2D" type="PointLight2D" parent="Sprite"]
+[node name="CircularLight" type="PointLight2D" parent="Sprite"]
 energy = 0.5
 texture = ExtResource("2_1ao5r")
 texture_scale = 0.5
@@ -248,4 +248,8 @@ collide_with_areas = true
 
 [node name="Timer" type="Timer" parent="."]
 
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

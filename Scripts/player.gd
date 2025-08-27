@@ -15,11 +15,13 @@ func _physics_process(delta:float) -> void:
 			_move(Vector2(0,-1))
 		elif Input.is_action_pressed("ui_down") and !$RayDown.is_colliding() :
 			_move(Vector2(0,1))
-		elif Input.is_action_pressed("ui_left") and !$RayLeft.is_colliding() :
-			_move(Vector2(-1,0))
+		elif Input.is_action_pressed("ui_left") :
+			if !$RayLeft.is_colliding() :
+				_move(Vector2(-1,0))
 			$AnimatedSprite2D.flip_h = true
-		elif Input.is_action_pressed("ui_right") and !$RayRight.is_colliding() :
-			_move(Vector2(1,0))
+		elif Input.is_action_pressed("ui_right") :
+			if !$RayRight.is_colliding() :
+				_move(Vector2(1,0))
 			$AnimatedSprite2D.flip_h = false
 		if Input.is_action_just_pressed("ui_accept") and can_drop_gift :
 			drop_gift()

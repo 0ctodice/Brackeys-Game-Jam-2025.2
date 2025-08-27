@@ -15,20 +15,17 @@ Todo (Coding) :
 	Diversion par le cadeau :
 		- S'il voit le cadeau, fonce dessus (comme si c'était santa) : DONE
 		- Reste sur le cadeaux XX temps (SantaCollider à 0) : DONE
+	- Changer le couloir pour une forme en L
 	- LA MUERTE DEL SANTA
-	- la light des enfants (et celle du santa)
+	- la light des enfants (et celle du santa) : DONE
 	- Transition entre les niveaux
 	- sound design + musique
 	- UI / Indication des commandes
-	- clean du code de santa (ci-dessous)
 
 Problème : 
-	double collision pour l'enfant entre santa et le gift : DONE
-	On doit pouvoir regardé dans une direction, même si on peut pas y a aller
-	
-Idée :
-	Les cadeau que drop santa, le bloque : DONE
-		On peut allégé le code (retirer le gift collider)
+	- double collision pour l'enfant entre santa et le gift : DONE
+	- On doit pouvoir regardé dans une direction, même si on peut pas y a aller : DONE
+	- On veut éviter que les enfants détecte Santa derrière un mur
 	
 Tuto :
 	- Récupérer un cookie
