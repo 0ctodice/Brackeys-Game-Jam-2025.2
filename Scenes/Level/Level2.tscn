@@ -6,6 +6,9 @@
 
 [node name="World" type="Node2D"]
 
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+
 [node name="LevelDesign" type="Area2D" parent="."]
 collision_layer = 2
 collision_mask = 0
