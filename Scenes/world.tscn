@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://g1spfotggfuq" path="res://Assets/Tilesheet/tileset_outer.png" id="2_5a7ea"]
 [ext_resource type="PackedScene" uid="uid://meyovnb0ln3s" path="res://Scenes/naughty_child.tscn" id="3_5a7ea"]
 [ext_resource type="Texture2D" uid="uid://chdf6g7tw43on" path="res://Assets/Tilesheet/tileset_wall.png" id="3_8j60k"]
-[ext_resource type="Texture2D" uid="uid://dt2cmm6vf501o" path="res://Assets/Tilesheet/Sprite-0005.png" id="4_fo5ed"]
+[ext_resource type="Texture2D" uid="uid://b8h6bcps6vena" path="res://Assets/Tilesheet/assets.png" id="4_5ukr8"]
 [ext_resource type="PackedScene" uid="uid://ccpyl1fknrevd" path="res://Scenes/player.tscn" id="5_5ukr8"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fo5ed"]
@@ -1040,9 +1040,9 @@ tile_set = SubResource("TileSet_k7acu")
 tile_map_data = PackedByteArray("AAADAAEAAgABAAIAAAAEAAEAAgABAAIAAAAFAAEAAgABAAIAAAAGAAEAAgABAAIAAAAHAAEAAgABAAIAAAAIAAEAAgABAAIAAAAJAAEAAgABAAIAAAAKAAEAAgABAAIAAAALAAEAAgABAAIAAAAMAAEAAgABAAIAAAANAAEAAgABAAIAAAAOAAEAAgABAAIAAAA=")
 tile_set = SubResource("TileSet_k7acu")
 
-[node name="Cheminée" type="Sprite2D" parent="."]
+[node name="Chimney" type="Sprite2D" parent="."]
 position = Vector2(64, 24)
-texture = ExtResource("4_fo5ed")
+texture = ExtResource("4_5ukr8")
 region_enabled = true
 region_rect = Rect2(0, 0, 32, 48)
 
