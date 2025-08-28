@@ -4,14 +4,15 @@ enum {SEARCHING, CHASING, ROAMING, OPENING_GIFT, FINISHED_OPENING_GIFT}
 
 const TILE_SIZE : Vector2 = Vector2(16,16)
 var sprite_tween : Tween
-var state = SEARCHING
-var can_move : bool = false
+var state = ROAMING
+var can_move : bool = true
 var rng = RandomNumberGenerator.new()
 var possible_move = Array()
 var santa_last_position = null
 var santa_detected = false
 var is_it_gift = false
 var kid_type : String
+var last_direction : Vector2 = Vector2.ZERO
 
 func _ready():
 	kid_type = "A" if rng.randi_range(0,1) == 0 else "B"
@@ -23,10 +24,11 @@ func _physics_process(delta:float) -> void:
 			SEARCHING :
 				_load_anim("Walk")
 				$Timer.start(rng.randf_range(0.185, 3.0))
-				var target = _get_random_direction()
+				_get_allowed_directions()
+				var target = last_direction if last_direction in possible_move else possible_move[rng.randi_range(0, possible_move.size() - 1)]
+				last_direction = target
 				_look_towards_position(target)
 				_move(target)
-				state = ROAMING
 			CHASING :
 				$Sprite/CircularLight.color = Color.RED
 				$Sprite/TorchAnchor/TorchLight.color = Color.RED
@@ -87,7 +89,7 @@ func _get_santa_direction() -> Vector2 :
 		possible_move.append_array([Vector2.UP, Vector2.RIGHT, Vector2.DOWN, Vector2.LEFT])
 	
 	return dir
-func _get_random_direction() -> Vector2 :
+func _get_allowed_directions() -> void :
 	possible_move.clear()
 	if !$RayUp.is_colliding() :
 		possible_move.append(Vector2.UP)
@@ -98,7 +100,6 @@ func _get_random_direction() -> Vector2 :
 	if !$RayRight.is_colliding() :
 		possible_move.append(Vector2.RIGHT)
 	print(possible_move)
-	return possible_move[rng.randi_range(0, possible_move.size() - 1)]
 func _move(dir: Vector2) -> void:
 	can_move = false
 	global_position += dir * TILE_SIZE
@@ -108,5 +109,4 @@ func _move(dir: Vector2) -> void:
 	sprite_tween.set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
 	sprite_tween.tween_property($Sprite, "global_position", global_position, 0.185).set_trans(Tween.TRANS_SINE)
 func _on_timer_timeout(): can_move = true
-func _on_visible_on_screen_notifier_2d_screen_entered(): can_move = true
-func _on_visible_on_screen_notifier_2d_screen_exited(): can_move = false
+func is_opening_gift() -> bool : return state == OPENING_GIFT or state == FINISHED_OPENING_GIFT

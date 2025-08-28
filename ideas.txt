@@ -15,18 +15,23 @@ Todo (Coding) :
 	Diversion par le cadeau :
 		- S'il voit le cadeau, fonce dessus (comme si c'était santa) : DONE
 		- Reste sur le cadeaux XX temps (SantaCollider à 0) : DONE
-	- Changer le couloir pour une forme en L
-	- LA MUERTE DEL SANTA
 	- la light des enfants (et celle du santa) : DONE
-	- Transition entre les niveaux
+	- Changer le couloir pour une forme en L : DONE
+	- LA MUERTE DEL SANTA : DONE (faire une petite anim ??)
+	- Transition entre les niveaux : DONE
 	- sound design + musique
 	- UI / Indication des commandes
+	- Faire 5 autres niveaux
+	- Changer l'IA des childs pour qu'il garde la même direction au lieu d'aller à l'inverse
 
 Problème : 
 	- double collision pour l'enfant entre santa et le gift : DONE
 	- On doit pouvoir regardé dans une direction, même si on peut pas y a aller : DONE
 	- On veut éviter que les enfants détecte Santa derrière un mur
-	
+	- Bug des possible move % truc des childs : DONE
+	- Problème de collision des enfants : DONE ?
+	- Les gamins ne passent pas toujours en OPENING_GIFT
+
 Tuto :
 	- Récupérer un cookie
 	- Le cookie peut être dans une autre pièce

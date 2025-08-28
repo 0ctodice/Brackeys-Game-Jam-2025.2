@@ -1,5 +1,5 @@
 extends CharacterBody2D
-
+class_name Player
 const TILE_SIZE : Vector2 = Vector2(16,16)
 var sprite_tween : Tween
 var gift_scene = load("res://Scenes/gift.tscn")

@@ -1,0 +1,40 @@
+[gd_scene load_steps=3 format=3 uid="uid://7bvugtxkmkd"]
+
+[ext_resource type="Script" uid="uid://cj10001kuk3ki" path="res://Scripts/scene_manager.gd" id="1_mk1ro"]
+[ext_resource type="AudioStream" uid="uid://xwbc00p2xdom" path="res://Assets/Music.wav" id="2_8bihv"]
+
+[node name="SceneManager" type="Node2D"]
+script = ExtResource("1_mk1ro")
+scene_number = 5
+
+[node name="CurrentScene" type="Node2D" parent="."]
+
+[node name="Content" type="Node2D" parent="."]
+
+[node name="Timer" type="Timer" parent="Content"]
+
+[node name="Control" type="Control" parent="Content"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 320.0
+offset_bottom = 240.0
+
+[node name="ColorRect" type="ColorRect" parent="Content/Control"]
+top_level = true
+light_mask = 2
+visibility_layer = 2
+layout_mode = 0
+offset_right = 320.0
+offset_bottom = 240.0
+color = Color(0.164706, 0.164706, 0.164706, 1)
+
+[node name="AudioManager" type="Node" parent="Content"]
+
+[node name="Music" type="AudioStreamPlayer" parent="Content/AudioManager"]
+stream = ExtResource("2_8bihv")
+autoplay = true
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0.203922, 0.305882, 0.337255, 1)
+
+[connection signal="timeout" from="Content/Timer" to="." method="_on_timer_timeout"]

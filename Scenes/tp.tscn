@@ -2,15 +2,15 @@
 
 [ext_resource type="Script" uid="uid://dbi1qj7lwgxfe" path="res://Scripts/tp.gd" id="1_prp2g"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_g13ap"]
-size = Vector2(32, 32)
+[sub_resource type="CircleShape2D" id="CircleShape2D_prp2g"]
+radius = 16.0
 
 [node name="TP" type="Area2D"]
 collision_layer = 32
 script = ExtResource("1_prp2g")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_g13ap")
+shape = SubResource("CircleShape2D_prp2g")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]

@@ -1,0 +1,87 @@
+extends Node2D
+
+enum {FADEIN, FADEOUT, PLAYING, NEXT_SCENE, DEAD, CURRENT_SCENE, WAIT}
+
+@export var scene_number : int
+var current_scene_id = 1
+var state = FADEOUT
+var current_scene : Node2D
+var player : Player
+var chimney : Area2D
+var tween : Tween
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	load_first_scene()
+func _on_timer_timeout():
+	$Content/Timer.stop()
+	match(state) :
+		FADEIN :
+			fade_in()
+		FADEOUT :
+			fade_out()
+		PLAYING :
+			state = WAIT
+		NEXT_SCENE :
+			state = FADEOUT
+			load_scene(current_scene_id + 1)
+		DEAD :
+			fade_in_game_over()
+		CURRENT_SCENE :
+			state = FADEOUT
+			load_scene(current_scene_id)
+		WAIT :
+			state = FADEIN
+			$Content/Timer.start(1)
+func load_first_scene() -> void :
+	current_scene = load("res://Scenes/Level/Level" + str(current_scene_id) + ".tscn").instantiate()
+	$CurrentScene.add_child(current_scene)
+	player = current_scene.get_node("Player")
+	chimney = current_scene.get_node("Chimney")
+	player.get_node("ChildCollider").connect("body_entered", child_contact)
+	chimney.connect("body_entered", on_chimney_entered)
+	_on_timer_timeout()
+func on_chimney_entered(body) :
+	if body.has_cookie :
+		body.can_walk = false
+		_on_timer_timeout()
+func load_scene(index : int) -> void :
+	if index != scene_number + 1:
+		current_scene.queue_free()
+		$CurrentScene.get_child(0).queue_free()
+		current_scene_id = index
+		current_scene = load("res://Scenes/Level/Level"+ str(index) +".tscn").instantiate()
+		$CurrentScene.add_child(current_scene)
+		player = current_scene.get_node("Player")
+		chimney = current_scene.get_node("Chimney")
+		player.get_node("ChildCollider").connect("body_entered", child_contact)
+		chimney.connect("body_entered", on_chimney_entered)
+	else :
+		load_scene(1)
+		#current_scene_id = index
+		#current_scene = load("res://Scenes/Level/Level"+ str(index) +".tscn").instantiate()
+		#$CurrentScene.add_child(current_scene)
+	_on_timer_timeout()
+func child_contact(body) -> void :
+	if player.get_node("AnimatedSprite2D").animation == "Drop_Gift" or body.is_opening_gift():
+		return
+	state = DEAD
+	player.can_walk = false
+	$Content/Timer.start(1)
+func fade_in() -> void :
+	tween = create_tween()
+	tween.set_trans(Tween.TRANS_LINEAR).set_ease(Tween.EASE_IN_OUT)
+	tween.tween_property($Content/Control/ColorRect, "color", Color("424242", 1.0),.75)
+	$Content/Timer.start(1)
+	state = NEXT_SCENE
+func fade_out() -> void :
+	tween = create_tween()
+	tween.set_trans(Tween.TRANS_LINEAR).set_ease(Tween.EASE_IN_OUT)
+	tween.tween_property($Content/Control/ColorRect, "color", Color("424242", 0.0),.75)
+	$Content/Timer.start(1)
+	state = PLAYING
+func fade_in_game_over() -> void :
+	tween = create_tween()
+	tween.set_trans(Tween.TRANS_LINEAR).set_ease(Tween.EASE_IN_OUT)
+	tween.tween_property($Content/Control/ColorRect, "color", Color("424242", 1.0),.75)
+	$Content/Timer.start(1)
+	state = CURRENT_SCENE

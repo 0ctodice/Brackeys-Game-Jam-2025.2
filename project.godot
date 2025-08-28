@@ -11,8 +11,9 @@ config_version=5
 [application]
 
 config/name="Brackeys_2025_2"
-run/main_scene="uid://cexjsorf3mo4w"
+run/main_scene="uid://7bvugtxkmkd"
 config/features=PackedStringArray("4.4", "GL Compatibility")
+boot_splash/bg_color=Color(0.164706, 0.164706, 0.164706, 1)
 config/icon="res://icon.svg"
 
 [display]
