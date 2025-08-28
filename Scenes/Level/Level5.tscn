@@ -52,9 +52,6 @@ polygon = PackedVector2Array(144, -320, 208, -320, 208, -384, 224, -384, 224, -4
 [node name="Cookie" parent="." instance=ExtResource("2_6ivfn")]
 position = Vector2(-160, -128)
 
-[node name="Player" parent="." instance=ExtResource("3_f0l3o")]
-position = Vector2(208, 96)
-
 [node name="TP" parent="." node_paths=PackedStringArray("destination") instance=ExtResource("2_f0l3o")]
 position = Vector2(160, 64)
 destination = NodePath("../TP2")
@@ -73,14 +70,17 @@ active = true
 position = Vector2(-80, -192)
 destination = NodePath("../TP3")
 
-[node name="NaughtyChild" parent="." instance=ExtResource("5_f0l3o")]
-position = Vector2(160, 160)
+[node name="Chimney" parent="." instance=ExtResource("6_w01r6")]
+position = Vector2(208, 80)
+
+[node name="Player" parent="." instance=ExtResource("3_f0l3o")]
+position = Vector2(208, 96)
 
 [node name="NaughtyChild2" parent="." instance=ExtResource("5_f0l3o")]
 position = Vector2(48, -192)
 
 [node name="NaughtyChild3" parent="." instance=ExtResource("5_f0l3o")]
-position = Vector2(-144, -128)
+position = Vector2(160, 160)
 
-[node name="Chimney" parent="." instance=ExtResource("6_w01r6")]
-position = Vector2(208, 80)
+[node name="NaughtyChild4" parent="." instance=ExtResource("5_f0l3o")]
+position = Vector2(-144, -128)

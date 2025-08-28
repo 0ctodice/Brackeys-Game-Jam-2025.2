@@ -6,6 +6,7 @@ var gift_scene = load("res://Scenes/gift.tscn")
 var can_drop_gift : bool = true
 var has_cookie : bool = false
 var can_walk : bool = true
+var step_sound_1 : bool = true
 
 func _ready():
 	$AnimatedSprite2D.play("Walk")
@@ -31,9 +32,15 @@ func _move(dir: Vector2) -> void:
 	if sprite_tween : sprite_tween.kill()
 	sprite_tween = create_tween()
 	sprite_tween.set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
-	sprite_tween.tween_property($AnimatedSprite2D, "global_position", $AnimatedSprite2D.global_position + dir * TILE_SIZE, 0.185).set_trans(Tween.TRANS_SINE)
+	sprite_tween.tween_property($AnimatedSprite2D, "global_position", $AnimatedSprite2D.global_position + dir * TILE_SIZE, 0.3).set_trans(Tween.TRANS_SINE)
+	if step_sound_1 :
+		get_node("/root/SceneManager/Content/AudioManager").play_santa_step_1()
+	else :
+		get_node("/root/SceneManager/Content/AudioManager").play_santa_step_2()
+	step_sound_1 = !step_sound_1
 func drop_gift() -> void:
 	can_walk = false
+	get_node("/root/SceneManager/Content/AudioManager").play_gift()
 	$AnimatedSprite2D.play("Drop_Gift")
 	var gift = gift_scene.instantiate()
 	gift.global_position = global_position

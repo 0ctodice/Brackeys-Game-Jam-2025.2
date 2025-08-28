@@ -9,5 +9,6 @@ func _process(delta):
 
 func _on_body_entered(body):
 	if body.has_method("cookie_setter") :
+		get_node("/root/SceneManager/Content/AudioManager").play_crunch()
 		body.cookie_setter(true)
 		queue_free()

@@ -42,6 +42,8 @@ func load_first_scene() -> void :
 	_on_timer_timeout()
 func on_chimney_entered(body) :
 	if body.has_cookie :
+		$Content/AudioManager.play_fire_out()
+		chimney.get_node("AnimatedSprite2D").visible = false
 		body.can_walk = false
 		_on_timer_timeout()
 func load_scene(index : int) -> void :
@@ -55,15 +57,14 @@ func load_scene(index : int) -> void :
 		chimney = current_scene.get_node("Chimney")
 		player.get_node("ChildCollider").connect("body_entered", child_contact)
 		chimney.connect("body_entered", on_chimney_entered)
+		$Content/AudioManager.play_fireplace()
 	else :
 		load_scene(1)
-		#current_scene_id = index
-		#current_scene = load("res://Scenes/Level/Level"+ str(index) +".tscn").instantiate()
-		#$CurrentScene.add_child(current_scene)
 	_on_timer_timeout()
 func child_contact(body) -> void :
 	if player.get_node("AnimatedSprite2D").animation == "Drop_Gift" or body.is_opening_gift():
 		return
+	body.can_move = false
 	state = DEAD
 	player.can_walk = false
 	$Content/Timer.start(1)

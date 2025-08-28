@@ -1,7 +1,17 @@
-[gd_scene load_steps=3 format=3 uid="uid://7bvugtxkmkd"]
+[gd_scene load_steps=13 format=3 uid="uid://7bvugtxkmkd"]
 
 [ext_resource type="Script" uid="uid://cj10001kuk3ki" path="res://Scripts/scene_manager.gd" id="1_mk1ro"]
+[ext_resource type="Script" uid="uid://bpqu5mb0gra58" path="res://Scripts/audio_manager.gd" id="2_0eamy"]
 [ext_resource type="AudioStream" uid="uid://xwbc00p2xdom" path="res://Assets/Music.wav" id="2_8bihv"]
+[ext_resource type="AudioStream" uid="uid://bf014k7irpr6t" path="res://Assets/Audio/child_step_1.wav" id="2_fhdvy"]
+[ext_resource type="AudioStream" uid="uid://ca2avwcnj2dl7" path="res://Assets/Audio/child_step_2.wav" id="3_0eamy"]
+[ext_resource type="AudioStream" uid="uid://y875sohb2yev" path="res://Assets/Audio/fireplace.wav" id="3_ccwmf"]
+[ext_resource type="AudioStream" uid="uid://jriv0f6uhxlc" path="res://Assets/Audio/crunch.wav" id="4_424ls"]
+[ext_resource type="AudioStream" uid="uid://bw7dofj0quhrw" path="res://Assets/Audio/fire_out.wav" id="4_aq7jj"]
+[ext_resource type="AudioStream" uid="uid://2uuf3y0u2ufq" path="res://Assets/Audio/gift.wav" id="5_ccwmf"]
+[ext_resource type="AudioStream" uid="uid://bjfxwrodmurn7" path="res://Assets/Audio/naughty.wav" id="6_aq7jj"]
+[ext_resource type="AudioStream" uid="uid://qp7nifgumt5f" path="res://Assets/Audio/santa_step_1.wav" id="7_vbxak"]
+[ext_resource type="AudioStream" uid="uid://dv6uep1rk5min" path="res://Assets/Audio/santa_step_2.wav" id="8_sym2d"]
 
 [node name="SceneManager" type="Node2D"]
 script = ExtResource("1_mk1ro")
@@ -29,10 +39,46 @@ offset_bottom = 240.0
 color = Color(0.164706, 0.164706, 0.164706, 1)
 
 [node name="AudioManager" type="Node" parent="Content"]
+script = ExtResource("2_0eamy")
+
+[node name="Fireplace" type="AudioStreamPlayer" parent="Content/AudioManager"]
+stream = ExtResource("3_ccwmf")
+autoplay = true
+
+[node name="FireOut" type="AudioStreamPlayer" parent="Content/AudioManager"]
+stream = ExtResource("4_aq7jj")
+volume_db = -5.0
 
 [node name="Music" type="AudioStreamPlayer" parent="Content/AudioManager"]
 stream = ExtResource("2_8bihv")
+volume_db = -15.0
 autoplay = true
+
+[node name="ChildStep1" type="AudioStreamPlayer" parent="Content/AudioManager"]
+stream = ExtResource("2_fhdvy")
+volume_db = -5.0
+
+[node name="ChildStep2" type="AudioStreamPlayer" parent="Content/AudioManager"]
+stream = ExtResource("3_0eamy")
+pitch_scale = 0.01
+
+[node name="Crunch" type="AudioStreamPlayer" parent="Content/AudioManager"]
+stream = ExtResource("4_424ls")
+
+[node name="Gift" type="AudioStreamPlayer" parent="Content/AudioManager"]
+stream = ExtResource("5_ccwmf")
+volume_db = -5.0
+
+[node name="Naughty" type="AudioStreamPlayer" parent="Content/AudioManager"]
+stream = ExtResource("6_aq7jj")
+
+[node name="SantaStep1" type="AudioStreamPlayer" parent="Content/AudioManager"]
+stream = ExtResource("7_vbxak")
+volume_db = -5.0
+
+[node name="SantaStep2" type="AudioStreamPlayer" parent="Content/AudioManager"]
+stream = ExtResource("8_sym2d")
+volume_db = -5.0
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color(0.203922, 0.305882, 0.337255, 1)

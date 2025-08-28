@@ -1,10 +1,62 @@
-[gd_scene load_steps=2 format=3 uid="uid://oar75najea83"]
+[gd_scene load_steps=10 format=3 uid="uid://oar75najea83"]
+
+[ext_resource type="Script" uid="uid://dt6g6ogv65qg2" path="res://Scripts/chimney.gd" id="1_t0ota"]
+[ext_resource type="Texture2D" uid="uid://4veddm5xoq2q" path="res://Assets/Tilesheet/assets.png" id="2_no4au"]
+[ext_resource type="Texture2D" uid="uid://dfvwvgnyij7kd" path="res://Assets/circular_light_2D_2.png" id="2_wc4v3"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wc4v3"]
+atlas = ExtResource("2_no4au")
+region = Rect2(0, 112, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_no4au"]
+atlas = ExtResource("2_no4au")
+region = Rect2(16, 112, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8k3dp"]
+atlas = ExtResource("2_no4au")
+region = Rect2(32, 112, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0i4y8"]
+atlas = ExtResource("2_no4au")
+region = Rect2(48, 112, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ohpam"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wc4v3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_no4au")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8k3dp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0i4y8")
+}],
+"loop": true,
+"name": &"Close",
+"speed": 2.5
+}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fd37x"]
 size = Vector2(32, 32)
 
 [node name="Chimney" type="Area2D"]
 collision_layer = 0
+script = ExtResource("1_t0ota")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, 8)
+sprite_frames = SubResource("SpriteFrames_ohpam")
+animation = &"Close"
+frame_progress = 0.555497
+
+[node name="PointLight2D" type="PointLight2D" parent="AnimatedSprite2D"]
+color = Color(1, 0.4, 0.27451, 1)
+texture = ExtResource("2_wc4v3")
+texture_scale = 0.5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_fd37x")

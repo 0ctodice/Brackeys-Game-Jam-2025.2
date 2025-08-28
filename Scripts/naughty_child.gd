@@ -13,7 +13,8 @@ var santa_detected = false
 var is_it_gift = false
 var kid_type : String
 var last_direction : Vector2 = Vector2.ZERO
-
+var step_sound_1 : bool = true
+var should_play_the_naughty_sound : bool = false
 func _ready():
 	kid_type = "A" if rng.randi_range(0,1) == 0 else "B"
 	_load_anim("Walk")
@@ -25,7 +26,8 @@ func _physics_process(delta:float) -> void:
 				_load_anim("Walk")
 				$Timer.start(rng.randf_range(0.185, 3.0))
 				_get_allowed_directions()
-				var target = last_direction if last_direction in possible_move else possible_move[rng.randi_range(0, possible_move.size() - 1)]
+				var random_direction = possible_move[rng.randi_range(0, possible_move.size() - 1)]
+				var target = last_direction if last_direction in possible_move else random_direction
 				last_direction = target
 				_look_towards_position(target)
 				_move(target)
@@ -33,6 +35,9 @@ func _physics_process(delta:float) -> void:
 				$Sprite/CircularLight.color = Color.RED
 				$Sprite/TorchAnchor/TorchLight.color = Color.RED
 				_load_anim("Chase")
+				if should_play_the_naughty_sound :
+					get_node("/root/SceneManager/Content/AudioManager").play_naughty()
+					should_play_the_naughty_sound = false
 				$Timer.start(.5)
 				var target = _get_santa_direction()
 				_look_towards_position(target)
@@ -42,7 +47,6 @@ func _physics_process(delta:float) -> void:
 				$Sprite/TorchAnchor/TorchLight.color = Color.WHITE
 				_load_anim("Walk")
 				$Timer.start(.25)
-				state = SEARCHING
 				if possible_move.size() != 0 :
 					_move(Vector2.ZERO)
 					_look_towards_position(possible_move.pop_at(rng.randi_range(0, possible_move.size() - 1)))
@@ -57,11 +61,16 @@ func _physics_process(delta:float) -> void:
 				state = FINISHED_OPENING_GIFT
 			FINISHED_OPENING_GIFT :
 				state = ROAMING
+				possible_move.clear()
+				possible_move.append_array([Vector2.UP, Vector2.RIGHT, Vector2.DOWN, Vector2.LEFT])
+
 	if !santa_detected and $SantaCollider.is_colliding() and state != OPENING_GIFT:
 		santa_detected = true
 		santa_last_position = $SantaCollider.get_collider().global_position
+		if state != CHASING :
+			should_play_the_naughty_sound = true
 		state = CHASING
-		is_it_gift = $SantaCollider.get_collider().name.begins_with("Gift") and $SantaCollider.get_collider().name != "GiftCollider"
+		#is_it_gift = $SantaCollider.get_collider().name.begins_with("Gift") and $SantaCollider.get_collider().name != "GiftCollider"
 func _load_anim(anim:String) -> void :
 	$Sprite/AnimatedBody.play(anim + "_" + kid_type if anim != "Opening_Gift" else "Opening_Gift")
 	$Sprite/AnimatedOutfit.play(anim + "_" + kid_type if anim != "Opening_Gift" else "Opening_Gift")
@@ -85,6 +94,7 @@ func _get_santa_direction() -> Vector2 :
 			dir = Vector2(1,0)
 	else :
 		state = OPENING_GIFT if is_it_gift else ROAMING
+		is_it_gift = false
 		possible_move.clear()
 		possible_move.append_array([Vector2.UP, Vector2.RIGHT, Vector2.DOWN, Vector2.LEFT])
 	
@@ -99,7 +109,6 @@ func _get_allowed_directions() -> void :
 		possible_move.append(Vector2.LEFT)
 	if !$RayRight.is_colliding() :
 		possible_move.append(Vector2.RIGHT)
-	print(possible_move)
 func _move(dir: Vector2) -> void:
 	can_move = false
 	global_position += dir * TILE_SIZE
@@ -108,5 +117,10 @@ func _move(dir: Vector2) -> void:
 	sprite_tween = create_tween()
 	sprite_tween.set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
 	sprite_tween.tween_property($Sprite, "global_position", global_position, 0.185).set_trans(Tween.TRANS_SINE)
+	if step_sound_1 :
+		get_node("/root/SceneManager/Content/AudioManager").play_child_step_1()
+	else :
+		get_node("/root/SceneManager/Content/AudioManager").play_child_step_2()
+	step_sound_1 = !step_sound_1
 func _on_timer_timeout(): can_move = true
 func is_opening_gift() -> bool : return state == OPENING_GIFT or state == FINISHED_OPENING_GIFT
