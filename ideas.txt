@@ -23,7 +23,7 @@ Todo (Coding) :
 	- Faire une anim de capture de Santa : FLEMME
 	- Faire une anim l'ouverture/fermeture de la cheminée : DONE
 	- UI / Indication des commandes : DONE
-	- SplashScreen + écran de fin ? crédit ?
+	- SplashScreen + écran de fin ? crédit ? : DONE
 	- Faire 5 autres niveaux minimum
 	- Faire le SIIIIITE
 

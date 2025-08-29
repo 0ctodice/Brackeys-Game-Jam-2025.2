@@ -1,14 +1,15 @@
 extends Node2D
 
-enum {FADEIN, FADEOUT, PLAYING, NEXT_SCENE, DEAD, CURRENT_SCENE, WAIT}
+enum {FADEIN, FADEOUT, PLAYING, NEXT_SCENE, DEAD, CURRENT_SCENE, WAIT, CREDITS}
 
 @export var scene_number : int
-var current_scene_id = 1
+var current_scene_id = 5
 var state = FADEOUT
 var current_scene : Node2D
 var player : Player
 var chimney : Area2D
 var tween : Tween
+var the_end : bool = false
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	load_first_scene()
@@ -39,6 +40,8 @@ func _on_timer_timeout():
 		WAIT :
 			state = FADEIN
 			$Content/Timer.start(1)
+		CREDITS :
+			pass
 func load_first_scene() -> void :
 	current_scene = load("res://Scenes/Level/Level" + str(current_scene_id) + ".tscn").instantiate()
 	$CurrentScene.add_child(current_scene)
@@ -54,19 +57,20 @@ func on_chimney_entered(body) :
 		body.can_walk = false
 		_on_timer_timeout()
 func load_scene(index : int) -> void :
+	current_scene.queue_free()
+	$CurrentScene.get_child(0).queue_free()
+	current_scene_id = index
 	if index != scene_number + 1:
-		current_scene.queue_free()
-		$CurrentScene.get_child(0).queue_free()
-		current_scene_id = index
 		current_scene = load("res://Scenes/Level/Level"+ str(index) +".tscn").instantiate()
-		$CurrentScene.add_child(current_scene)
 		player = current_scene.get_node("Player")
 		chimney = current_scene.get_node("Chimney")
 		player.get_node("ChildCollider").connect("body_entered", child_contact)
 		chimney.connect("body_entered", on_chimney_entered)
 		$Content/AudioManager.play_fireplace()
 	else :
-		load_scene(1)
+		current_scene = load("res://Scenes/credits.tscn").instantiate()
+		the_end = true
+	$CurrentScene.add_child(current_scene)
 	_on_timer_timeout()
 func child_contact(body) -> void :
 	if player.get_node("AnimatedSprite2D").animation == "Drop_Gift" or body.is_opening_gift():
@@ -86,7 +90,7 @@ func fade_out() -> void :
 	tween.set_trans(Tween.TRANS_LINEAR).set_ease(Tween.EASE_IN_OUT)
 	tween.tween_property($Content/Control/ColorRect, "color", Color("2a2a2a", 0.0),.75)
 	$Content/Timer.start(1)
-	state = PLAYING
+	state = PLAYING if !the_end else CREDITS
 func fade_in_game_over() -> void :
 	tween = create_tween()
 	tween.set_trans(Tween.TRANS_LINEAR).set_ease(Tween.EASE_IN_OUT)

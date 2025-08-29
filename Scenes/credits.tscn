@@ -1,0 +1,54 @@
+[gd_scene load_steps=5 format=3 uid="uid://bdav4dwub7w7k"]
+
+[ext_resource type="FontFile" uid="uid://bsidamyf748q3" path="res://Assets/Pixeled.ttf" id="1_r18jl"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_r18jl"]
+light_mode = 1
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_gryuy"]
+light_mode = 1
+
+[sub_resource type="LabelSettings" id="LabelSettings_gryuy"]
+line_spacing = 0.1
+paragraph_spacing = -12.225
+font = ExtResource("1_r18jl")
+font_size = 10
+
+[node name="Credits" type="Node2D"]
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ColorRect" type="ColorRect" parent="Control"]
+material = SubResource("CanvasItemMaterial_r18jl")
+layout_mode = 0
+offset_right = 320.0
+offset_bottom = 240.0
+color = Color(0.894118, 0.231373, 0.266667, 1)
+
+[node name="Label" type="Label" parent="Control"]
+material = SubResource("CanvasItemMaterial_gryuy")
+layout_mode = 1
+anchors_preset = -1
+offset_right = 320.0
+offset_bottom = 240.0
+text = "THANKS FOR PLAYING ?????
+
+THIS LITTLE GAME WAS MADE FOR THE
+BRACKEYS GAME JAM 2025.2
+
+CONCEPT, GRAPHICS, CODE,
+WERE MADE BY ME, OCTODICE.
+
+THE MUSIC WAS MADE BY PHEROPTE.
+(THANKS BROOS)
+
+SPECIAL THANKS TO THE TWITCH CHAT
+
+X/INTSTAGRAM/TWITCH : OCTODICE"
+label_settings = SubResource("LabelSettings_gryuy")
+horizontal_alignment = 1
+vertical_alignment = 1
