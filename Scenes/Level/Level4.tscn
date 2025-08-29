@@ -41,8 +41,6 @@ polygon = PackedVector2Array(96, 64, 80, 64, 80, 176, 128, 176, 128, 208, 192, 2
 position = Vector2(16, 239)
 polygon = PackedVector2Array(96, 65, 80, 65, 80, 161, 240, 161, 240, 65, 224, 65, 224, 145, 96, 145, 96, 95, 128.081, 95, 128, 65, 160, 65, 160.242, 95, 192, 95, 192, 112, 208, 112, 208, 95, 224, 95, 224, 65, 224, 33, 96, 33)
 
-[node name="GiftsNode" type="Node2D" parent="."]
-
 [node name="Cookie" parent="." instance=ExtResource("2_81nff")]
 position = Vector2(128, 352)
 
@@ -52,6 +50,8 @@ destination = NodePath("../TP2")
 
 [node name="Chimney" parent="." instance=ExtResource("2_uky4l")]
 position = Vector2(128, 80)
+
+[node name="GiftsNode" type="Node2D" parent="."]
 
 [node name="Player" parent="." instance=ExtResource("3_fc4qx")]
 position = Vector2(128, 96)

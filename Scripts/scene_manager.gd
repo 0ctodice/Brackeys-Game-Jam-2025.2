@@ -20,6 +20,13 @@ func _on_timer_timeout():
 		FADEOUT :
 			fade_out()
 		PLAYING :
+			if current_scene_id <= 5 and current_scene_id != 2 :
+				var tutoSprite = player.get_node("TutoAnimatedSprite2D")
+				tutoSprite.visible = true
+				tutoSprite.play("Init")
+				tutoSprite.connect("animation_finished", tuto_animation)
+			else :
+				player.can_walk = true
 			state = WAIT
 		NEXT_SCENE :
 			state = FADEOUT
@@ -71,13 +78,13 @@ func child_contact(body) -> void :
 func fade_in() -> void :
 	tween = create_tween()
 	tween.set_trans(Tween.TRANS_LINEAR).set_ease(Tween.EASE_IN_OUT)
-	tween.tween_property($Content/Control/ColorRect, "color", Color("424242", 1.0),.75)
+	tween.tween_property($Content/Control/ColorRect, "color", Color("2a2a2a", 1.0),.75)
 	$Content/Timer.start(1)
 	state = NEXT_SCENE
 func fade_out() -> void :
 	tween = create_tween()
 	tween.set_trans(Tween.TRANS_LINEAR).set_ease(Tween.EASE_IN_OUT)
-	tween.tween_property($Content/Control/ColorRect, "color", Color("424242", 0.0),.75)
+	tween.tween_property($Content/Control/ColorRect, "color", Color("2a2a2a", 0.0),.75)
 	$Content/Timer.start(1)
 	state = PLAYING
 func fade_in_game_over() -> void :
@@ -86,3 +93,16 @@ func fade_in_game_over() -> void :
 	tween.tween_property($Content/Control/ColorRect, "color", Color("424242", 1.0),.75)
 	$Content/Timer.start(1)
 	state = CURRENT_SCENE
+func tuto_animation() -> void :
+	player.can_walk = true
+	var tutoSprite = player.get_node("TutoAnimatedSprite2D")
+	if tutoSprite.visible :
+		match(current_scene_id) :
+			1 :
+				tutoSprite.play("Love_Cookie")
+			3 :
+				tutoSprite.play("Where_Cookie")
+			4 :
+				tutoSprite.play("Child_Monster")
+			5 :
+				tutoSprite.play("Gift")

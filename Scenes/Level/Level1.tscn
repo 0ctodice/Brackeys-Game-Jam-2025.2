@@ -33,13 +33,13 @@ polygon = PackedVector2Array(80, 64, 240, 64, 240, 79, 208, 79, 208, 95, 144, 95
 [node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="LevelDesign"]
 polygon = PackedVector2Array(80, 152, 80, 176, 240, 176, 240, 136, 208, 136, 208, 104, 240, 104, 240, 64, 254, 64, 254, 183, 66, 183, 66, 64, 80, 64)
 
-[node name="GiftsNode" type="Node2D" parent="."]
-
 [node name="Cookie" parent="." instance=ExtResource("2_b2j2l")]
 position = Vector2(160, 144)
 
 [node name="Chimney" parent="." instance=ExtResource("4_b2j2l")]
 position = Vector2(160, 80)
+
+[node name="GiftsNode" type="Node2D" parent="."]
 
 [node name="Player" parent="." instance=ExtResource("3_f4tjx")]
 position = Vector2(160, 96)

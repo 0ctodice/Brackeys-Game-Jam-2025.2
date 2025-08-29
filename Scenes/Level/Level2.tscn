@@ -33,13 +33,13 @@ polygon = PackedVector2Array(96, 56, 224, 56, 224, 95, 176, 95, 176, 111, 160, 1
 position = Vector2(16, -1)
 polygon = PackedVector2Array(80, 177, 208, 177, 208, 145, 112, 145, 112, 129, 208, 129, 208, 57, 225, 57, 225, 188, 66, 188, 66, 64, 80, 64)
 
-[node name="GiftsNode" type="Node2D" parent="."]
-
 [node name="Cookie" parent="." instance=ExtResource("2_6f3v7")]
 position = Vector2(208, 160)
 
 [node name="Chimney" parent="." instance=ExtResource("2_kxj7e")]
 position = Vector2(208, 80)
+
+[node name="GiftsNode" type="Node2D" parent="."]
 
 [node name="Player" parent="." instance=ExtResource("3_kxj7e")]
 position = Vector2(208, 96)

@@ -5,7 +5,7 @@ var sprite_tween : Tween
 var gift_scene = load("res://Scenes/gift.tscn")
 var can_drop_gift : bool = true
 var has_cookie : bool = false
-var can_walk : bool = true
+var can_walk : bool = false
 var step_sound_1 : bool = true
 
 func _ready():
@@ -26,6 +26,8 @@ func _physics_process(delta:float) -> void:
 			$AnimatedSprite2D.flip_h = false
 		if Input.is_action_just_pressed("ui_accept") and can_drop_gift :
 			drop_gift()
+		if Input.is_anything_pressed() and $TutoAnimatedSprite2D.visible :
+			$TutoAnimatedSprite2D.visible = false
 func _move(dir: Vector2) -> void:
 	global_position += dir * TILE_SIZE
 	$AnimatedSprite2D.global_position -= dir * TILE_SIZE

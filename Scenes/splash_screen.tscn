@@ -1,0 +1,41 @@
+[gd_scene load_steps=5 format=3 uid="uid://uxsq77ibhrgl"]
+
+[ext_resource type="Texture2D" uid="uid://t8rqfaojkopl" path="res://Assets/logo base.png" id="1_6b1b0"]
+[ext_resource type="Script" uid="uid://ck738vlrnvj48" path="res://Scripts/splash_screen.gd" id="1_wwf30"]
+
+[sub_resource type="Gradient" id="Gradient_wwf30"]
+colors = PackedColorArray(0.164706, 0.164706, 0.164706, 1, 0.164706, 0.164706, 0.164706, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_h5jmx"]
+gradient = SubResource("Gradient_wwf30")
+
+[node name="SplashScreen" type="Node2D"]
+script = ExtResource("1_wwf30")
+
+[node name="BG" type="Sprite2D" parent="."]
+position = Vector2(160, 120)
+scale = Vector2(1.25, 240)
+texture = SubResource("GradientTexture1D_h5jmx")
+
+[node name="LOGO" type="Sprite2D" parent="."]
+texture_filter = 4
+texture_repeat = 1
+position = Vector2(160, 120)
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("1_6b1b0")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ColorRect" type="ColorRect" parent="Control"]
+layout_mode = 0
+offset_right = 320.0
+offset_bottom = 240.0
+color = Color(0.164706, 0.164706, 0.164706, 1)
+
+[node name="Timer" type="Timer" parent="."]
+
+[connection signal="timeout" from="Timer" to="." method="load_scene"]

@@ -22,8 +22,10 @@ Todo (Coding) :
 	- sound design + musique : DONE
 	- Faire une anim de capture de Santa : FLEMME
 	- Faire une anim l'ouverture/fermeture de la cheminée : DONE
-	- UI / Indication des commandes
-	- Faire 5 autres niveaux
+	- UI / Indication des commandes : DONE
+	- SplashScreen + écran de fin ? crédit ?
+	- Faire 5 autres niveaux minimum
+	- Faire le SIIIIITE
 
 Problème : 
 	- double collision pour l'enfant entre santa et le gift : DONE
@@ -44,5 +46,5 @@ Sound desgin :
 	- bruit pour les cookies : DONE
 	- bruit pour le mode chasse : DONE
 	- bruit ambiance feu : DONE
-	- bruit de changement de scene : FLEMME
+	- bruit de changement de scene : DONE
 	- bruit pour le cadeau : DONE
