@@ -3,7 +3,7 @@ extends Node2D
 enum {FADEIN, FADEOUT, PLAYING, NEXT_SCENE, DEAD, CURRENT_SCENE, WAIT, CREDITS}
 
 @export var scene_number : int
-var current_scene_id = 5
+var current_scene_id = 6
 var state = FADEOUT
 var current_scene : Node2D
 var player : Player
@@ -12,6 +12,7 @@ var tween : Tween
 var the_end : bool = false
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	$Content/AudioManager/Music.play()
 	load_first_scene()
 func _on_timer_timeout():
 	$Content/Timer.stop()

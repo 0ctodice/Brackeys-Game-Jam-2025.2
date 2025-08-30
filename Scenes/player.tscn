@@ -244,6 +244,7 @@ sprite_frames = SubResource("SpriteFrames_x3wgy")
 animation = &"Drop_Gift"
 
 [node name="PointLight2D" type="PointLight2D" parent="AnimatedSprite2D"]
+visible = false
 position = Vector2(0, 8)
 energy = 0.5
 texture = ExtResource("3_6t5aa")

@@ -24,9 +24,9 @@ Todo (Coding) :
 	- Faire une anim l'ouverture/fermeture de la cheminée : DONE
 	- UI / Indication des commandes : DONE
 	- SplashScreen + écran de fin ? crédit ? : DONE
+	- Faire le SIIIIITE : DONE
 	- Faire 5 autres niveaux minimum
-	- Faire le SIIIIITE
-
+	- GROSSE IDEE : Retirer la light sur Santa : DONE
 Problème : 
 	- double collision pour l'enfant entre santa et le gift : DONE
 	- On doit pouvoir regardé dans une direction, même si on peut pas y a aller : DONE
