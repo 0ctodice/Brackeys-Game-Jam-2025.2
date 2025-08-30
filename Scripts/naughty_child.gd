@@ -26,10 +26,12 @@ func _physics_process(delta:float) -> void:
 				_load_anim("Walk")
 				$Timer.start(rng.randf_range(0.185, 3.0))
 				_get_allowed_directions()
-				var random_direction = possible_move[rng.randi_range(0, possible_move.size() - 1)]
-				var target = last_direction if last_direction in possible_move else random_direction
-				last_direction = target
-				_look_towards_position(target)
+				var target = Vector2.ZERO
+				if possible_move.size() != 0 :
+					var random_direction = possible_move[rng.randi_range(0, possible_move.size() - 1)]
+					target = last_direction if last_direction in possible_move else random_direction
+					last_direction = target
+				_look_towards_position(last_direction)
 				_move(target)
 			CHASING :
 				$Sprite/CircularLight.color = Color.RED
@@ -65,17 +67,19 @@ func _physics_process(delta:float) -> void:
 				possible_move.append_array([Vector2.UP, Vector2.RIGHT, Vector2.DOWN, Vector2.LEFT])
 
 	if !santa_detected and $SantaCollider.is_colliding() and state != OPENING_GIFT:
-		santa_detected = true
-		santa_last_position = $SantaCollider.get_collider().global_position
-		if state != CHASING :
-			should_play_the_naughty_sound = true
-		state = CHASING
-		#is_it_gift = $SantaCollider.get_collider().name.begins_with("Gift") and $SantaCollider.get_collider().name != "GiftCollider"
+		$CheckWorldCollider.target_position = last_direction * ($SantaCollider.get_collider().global_position - $SantaCollider.global_position).length()
+		if !$CheckWorldCollider.is_colliding() :
+			santa_detected = true
+			santa_last_position = $SantaCollider.get_collider().global_position
+			if state != CHASING :
+				should_play_the_naughty_sound = true
+			state = CHASING
 func _load_anim(anim:String) -> void :
 	$Sprite/AnimatedBody.play(anim + "_" + kid_type if anim != "Opening_Gift" else "Opening_Gift")
 	$Sprite/AnimatedOutfit.play(anim + "_" + kid_type if anim != "Opening_Gift" else "Opening_Gift")
 func _look_towards_position(dir: Vector2) -> void :
 	$SantaCollider.target_position = dir * 80
+	$CheckWorldCollider.target_position = dir * 80
 	$Sprite/AnimatedOutfit.flip_h = $Sprite/AnimatedOutfit.flip_h if dir.x == 0 else dir.x < 0
 	$Sprite/AnimatedBody.flip_h = $Sprite/AnimatedBody.flip_h if dir.x == 0 else dir.x < 0
 	$Sprite/TorchAnchor.rotation = (PI/2) + dir.angle()
@@ -124,3 +128,4 @@ func _move(dir: Vector2) -> void:
 	step_sound_1 = !step_sound_1
 func _on_timer_timeout(): can_move = true
 func is_opening_gift() -> bool : return state == OPENING_GIFT or state == FINISHED_OPENING_GIFT
+func set_state_to_opening_gift() -> void : if state != CHASING : state = OPENING_GIFT

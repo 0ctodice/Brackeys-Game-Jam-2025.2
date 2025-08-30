@@ -3,7 +3,7 @@ extends Node2D
 enum {FADEIN, FADEOUT, PLAYING, NEXT_SCENE, DEAD, CURRENT_SCENE, WAIT, CREDITS}
 
 @export var scene_number : int
-var current_scene_id = 6
+@export var current_scene_id = 1
 var state = FADEOUT
 var current_scene : Node2D
 var player : Player

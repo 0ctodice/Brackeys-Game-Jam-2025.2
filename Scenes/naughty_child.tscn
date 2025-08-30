@@ -226,6 +226,11 @@ target_position = Vector2(0, -80)
 collision_mask = 5
 collide_with_areas = true
 
+[node name="CheckWorldCollider" type="RayCast2D" parent="."]
+target_position = Vector2(0, -80)
+collision_mask = 2
+collide_with_areas = true
+
 [node name="RayUp" type="RayCast2D" parent="."]
 target_position = Vector2(0, -16)
 collision_mask = 50
